@@ -1,7 +1,9 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
-import Header from './components/Header'
+import Header from './components/Header';
+import IncomeExpense from "./components/IncomeExpense";
+import History from './components/History'
 
 const getLocalStorage = () => {
   let historyList = localStorage.getItem("expense-tracker-history");
@@ -80,22 +82,7 @@ function App() {
     <Header balance={balance} />
     <IncomeExpense income={income} expense={expense} />
 
-      <section>
-        <h4>History</h4>
-        <div className="underline"></div>
-        {history.map((item) => (
-          <div className={`inline ${item.amount < 0 ? "red" : "green"}`} key={item.id}>
-            <button onClick={() => handleDelete(item)} className="exit">
-              X
-            </button>
-
-            <article  className="box inline">
-              <p>{item.text}</p>
-              <p>{item.amount > 0 ? "+" + item.amount : item.amount}</p>
-            </article>
-          </div>
-        ))}
-      </section>
+     <History history={history} />
 
       <form onSubmit={handleFormSubmit}>
         <h4>Add new transaction</h4>
