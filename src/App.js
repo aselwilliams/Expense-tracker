@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 import Header from './components/Header';
 import IncomeExpense from "./components/IncomeExpense";
-import History from './components/History'
+import History from './components/History';
+import Form from './components/Form'
 
 const getLocalStorage = () => {
   let historyList = localStorage.getItem("expense-tracker-history");
@@ -81,31 +82,8 @@ function App() {
     <div className="App">
     <Header balance={balance} />
     <IncomeExpense income={income} expense={expense} />
-
-     <History history={history} />
-
-      <form onSubmit={handleFormSubmit}>
-        <h4>Add new transaction</h4>
-        <div className="underline"></div>
-        <p>Text</p>
-        <input
-          type="text"
-          onChange={(e) => setInputText(e.target.value)}
-          value={inputText}
-          placeholder="Enter text..."
-        />
-        <p>
-          Amount<p>(negative - expense, positive - income)</p>
-        </p>
-        <input
-          type="number"
-          onChange={(e)=>setInputAmount(e.target.value)}
-          value={inputAmount}
-          placeholder="Enter amount..."
-        />
-
-        <button>Add transaction</button>
-      </form>
+     <History history={history} handleDelete={handleDelete} />
+    <Form inputText={inputText} inputAmount={inputAmount} setInputText={setInputText} setInputAmount={setInputAmount} handleFormSubmit={handleFormSubmit} />
     </div>
   );
 }

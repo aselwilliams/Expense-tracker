@@ -1,6 +1,6 @@
 import React from 'react'
 
-function History({history}) {
+function History({history, handleDelete}) {
   return (
     <section>
         <h4>History</h4>
