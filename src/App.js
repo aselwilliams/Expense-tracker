@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import Header from './components/Header';
 import IncomeExpense from "./components/IncomeExpense";
 import History from './components/History';
-import Form from './components/Form'
+import Form from './components/Form';
 
 const getLocalStorage = () => {
   let historyList = localStorage.getItem("expense-tracker-history");

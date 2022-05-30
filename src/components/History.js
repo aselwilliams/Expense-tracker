@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import Transaction from './Transaction';
 
 function History({history, handleDelete}) {
   return (
@@ -6,16 +7,7 @@ function History({history, handleDelete}) {
         <h4>History</h4>
         <div className="underline"></div>
         {history.map((item) => (
-          <div className={`inline ${item.amount < 0 ? "red" : "green"}`} key={item.id}>
-            <button onClick={() => handleDelete(item)} className="exit">
-              X
-            </button>
-
-            <article  className="box inline">
-              <p>{item.text}</p>
-              <p>{item.amount > 0 ? "+" + item.amount : item.amount}</p>
-            </article>
-          </div>
+         <Transaction item={item} handleDelete={handleDelete} />
         ))}
       </section>
   )
