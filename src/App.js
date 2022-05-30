@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
+import Header from './components/Header'
 
 const getLocalStorage = () => {
   let historyList = localStorage.getItem("expense-tracker-history");
@@ -77,17 +78,7 @@ function App() {
   return (
     <div className="App">
     <Header balance={balance} />
-      <section className="flex">
-        <div>
-          <label>INCOME</label>
-          <p className="income">${income.toFixed(2)}</p>
-        </div>
-        <div className="line"></div>
-        <div>
-          <label>EXPENSE</label>
-          <p className="expense">${Math.abs(expense).toFixed(2)}</p>
-        </div>
-      </section>
+    <IncomeExpense income={income} expense={expense} />
 
       <section>
         <h4>History</h4>
