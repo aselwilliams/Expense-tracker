@@ -76,11 +76,7 @@ function App() {
 
   return (
     <div className="App">
-      <header>
-        <h2>Expense Tracker</h2>
-        <label>YOUR BALANCE</label>
-        <p className="balance">${balance.toFixed(2)}</p>
-      </header>
+    <Header balance={balance} />
       <section className="flex">
         <div>
           <label>INCOME</label>
