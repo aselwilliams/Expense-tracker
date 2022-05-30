@@ -16,12 +16,14 @@ const getLocalStorage = () => {
 };
 
 const getStoredData = () => {
-  let incomeData = localStorage
+  let incomeData = []
+  localStorage
     .getItem("expense-tracker-history")
-    .map((item) => item.amount);
+    .map((item) => incomeData.push(item.amount));
+    console.log(incomeData, 'incomeData')
   if (incomeData) {
     return JSON.parse(
-      localStorage.getItem("expense-tracker-history").map((item) => item.amount)
+      localStorage.getItem("expense-tracker-history").map((item) => incomeData.push(item.amount))
     );
   } else {
     return 0;
