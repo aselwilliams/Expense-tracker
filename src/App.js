@@ -2,17 +2,25 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
-// const getLocalStorage = () => {
-//   let historyList = window.localStorage.getItem("expense-tracker-history");
-//   if (historyList) {
-//     return JSON.parse(window.localStorage.getItem("expense-tracker-history"));
-//   } else {
-//     return [];
-//   }
-// };
+const getLocalStorage = () => {
+  let historyList = localStorage.getItem("expense-tracker-history");
+  if (historyList) {
+    return JSON.parse(localStorage.getItem("expense-tracker-history"));
+  } else {
+    return [];
+  }
+};
 
+const getStoredData=()=>{
+  let incomeData=localStorage.getItem('expense-tracker-history').map((item)=>item.amount)
+  if(incomeData) {
+    return JSON.parse(localStorage.getItem('expense-tracker-history').map((item)=>item.amount))
+  }else {
+    return 0
+  }
+}
 function App() {
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState(getLocalStorage());
   const [transaction, setTransaction] = useState({});
   const [inputText, setInputText] = useState("");
   const [inputAmount, setInputAmount] = useState(0);
@@ -20,9 +28,12 @@ function App() {
   const [expense, setExpense] = useState(0);
   const [balance, setBalance] = useState(0);
 
-  const handleAmountChange = (e) => {
-    setInputAmount(e.target.value);
-  };
+//  useEffect(()=>{
+//    let historyList=JSON.parse(localStorage.getItem('expense-tracker-history'))
+//    if (historyList) {
+//     setHistory(historyList)
+//    }
+//  },[])
 
   useEffect(() => {
     setBalance(Number(income) + Number(expense));
@@ -59,9 +70,9 @@ function App() {
     }
   };
 
-  // useEffect(() => {
-  //   window.localStorage.setItem("expense-tracker-history", JSON.stingify(history));
-  // }, [history]);
+  useEffect(() => {
+    localStorage.setItem("expense-tracker-history", JSON.stringify(history));
+  }, [history, income, expense, balance]);
 
   return (
     <div className="App">
@@ -86,12 +97,12 @@ function App() {
         <h4>History</h4>
         <div className="underline"></div>
         {history.map((item) => (
-          <div className={`inline ${item.amount < 0 ? "red" : "green"}`}>
+          <div className={`inline ${item.amount < 0 ? "red" : "green"}`} key={item.id}>
             <button onClick={() => handleDelete(item)} className="exit">
               X
             </button>
 
-            <article key={item.id} className="box inline">
+            <article  className="box inline">
               <p>{item.text}</p>
               <p>{item.amount > 0 ? "+" + item.amount : item.amount}</p>
             </article>
@@ -114,7 +125,7 @@ function App() {
         </p>
         <input
           type="number"
-          onChange={handleAmountChange}
+          onChange={(e)=>setInputAmount(e.target.value)}
           value={inputAmount}
           placeholder="Enter amount..."
         />
