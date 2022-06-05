@@ -6,7 +6,7 @@ import IncomeExpense from "./components/IncomeExpense";
 import History from "./components/History";
 import Form from "./components/Form";
 
-const getLocalStorage = () => {
+const getHistory = () => {
   let historyList = localStorage.getItem("expense-tracker-history");
   if (historyList) {
     return JSON.parse(localStorage.getItem("expense-tracker-history"));
@@ -15,35 +15,28 @@ const getLocalStorage = () => {
   }
 };
 
-const getStoredData = () => {
-  let incomeData = []
-  localStorage
-    .getItem("expense-tracker-history")
-    .map((item) => incomeData.push(item.amount));
-    console.log(incomeData, 'incomeData')
-  if (incomeData) {
-    return JSON.parse(
-      localStorage.getItem("expense-tracker-history").map((item) => incomeData.push(item.amount))
-    );
-  } else {
-    return 0;
+const getIncome=()=>{
+  let incomeAmount=localStorage.getItem('income')
+  if(incomeAmount) {
+   return JSON.parse(localStorage.getItem('income'))
   }
-};
+  return 0
+}
+
+const getExpense=()=>{
+  let expenseAmount=localStorage.getItem('expense')
+  if(expenseAmount) {
+    return JSON.parse(localStorage.getItem('expense'))
+  }
+  return 0
+}
 function App() {
-  const [history, setHistory] = useState(getLocalStorage());
-  const [transaction, setTransaction] = useState({});
+  const [history, setHistory] = useState(getHistory());
   const [inputText, setInputText] = useState("");
   const [inputAmount, setInputAmount] = useState(0);
-  const [income, setIncome] = useState(0);
-  const [expense, setExpense] = useState(0);
+  const [income, setIncome] = useState(getIncome());
+  const [expense, setExpense] = useState(getExpense());
   const [balance, setBalance] = useState(0);
-
-  //  useEffect(()=>{
-  //    let historyList=JSON.parse(localStorage.getItem('expense-tracker-history'))
-  //    if (historyList) {
-  //     setHistory(historyList)
-  //    }
-  //  },[])
 
   useEffect(() => {
     setBalance(Number(income) + Number(expense));
@@ -82,6 +75,8 @@ function App() {
 
   useEffect(() => {
     localStorage.setItem("expense-tracker-history", JSON.stringify(history));
+    localStorage.setItem("income", JSON.stringify(income));
+    localStorage.setItem("expense", JSON.stringify(expense));
   }, [history, income, expense, balance]);
 
   return (
